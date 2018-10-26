@@ -7,12 +7,25 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
             primaryKey: true
+        },
+        email: {
+            type: DataTypes.STRING,
+            allowNull: false
         }
     });
-    // user.associate =  (models) => {
-    //     user.hasMany(models.macetero,{
-    //         as: 'userMacetero'
-    //     });
-    // };
+    user.associate =  (models) => {
+        // user.hasMany(models.groups,{
+        //     as: 'userGroups'
+        // });
+        user.hasMany(models.position,{
+            as: 'userPosition'
+        });
+
+        user.belongsToMany(models.groups, {
+            through: 'associateUserGroup',
+            as : 'userGroup',
+            unique: true
+        });
+    };
     return user;
 };

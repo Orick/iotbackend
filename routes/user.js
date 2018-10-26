@@ -5,6 +5,8 @@ const firebaseAdmin = require('../config/firebaseConfig');
 
 
 router.post('/create',(req,res,next)=>{
+    // req.body.email
+    // req.body.password
     firebaseAdmin.auth().getUserByEmail(req.body.email)
     .then(function(userRecord) {
         res.json({
@@ -22,7 +24,8 @@ router.post('/create',(req,res,next)=>{
             console.log("Usuario", userRecord.uid);
 
             models.user.create({
-                token:userRecord.uid
+                token:userRecord.uid,
+                email: req.body.email
             }).then(userCreated =>{
                 res.json({
                     status: 1,

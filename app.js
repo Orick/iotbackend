@@ -8,8 +8,12 @@ const bodyParser = require('body-parser');
 
 
 const indexRouter = require('./routes/index');
-const userRouter = require('./routes/user');
-
+const userRouter =  require('./routes/user');
+const groupRouter = require('./routes/groups');
+const placeRouter = require('./routes/place');
+const levelRouter = require('./routes/level');
+const ibeaconRouter = require('./routes/ibeacon');
+const positionRouter = require('./routes/position');
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -32,13 +36,14 @@ app.use('/', indexRouter);
 
 //  Orick  Begin //
 app.use('/user', userRouter);
+app.use('/groups', groupRouter);
+app.use('/place', placeRouter);
+app.use('/level', levelRouter);
+app.use('/ibeacon', ibeaconRouter);
+app.use('/position', positionRouter);
+
 //  Orick  End //
 
-//  Aleeh  Begin //
-//  Aleeh  End //
-
-//  BloodRage  Begin //
-//  BloodRage  End //
 
 
 // catch 404 and forward to error handler
