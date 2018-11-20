@@ -111,6 +111,49 @@ router.post('/asing',(req,res,next)=>{
 });
 
 
+router.post('/getall',(req,res,next)=>{
+    //req.body.token
+    
+    firebaseAdmin.auth().verifyIdToken(req.body.token)
+    .then(decodedToken => {
+        console.log("OK OK");
+        models.user.findOne({
+            where:{
+                token:decodedToken.uid
+            },
+            include:{
+                model: models.groups,
+                as: 'userGroup'
+            }
+        }).then(user => {
+            if(user){
+                res.json({
+                    code: 1,
+                    groups: user.userGroup
+                });    
+            }else{
+                res.json({
+                    code: 0,
+                    description:'Usuario no encontrado'
+                });
+            }
+        }).catch(error => {
+            res.json({
+                code: 0,
+                description:'Error DB',
+                error
+            });
+        });
+
+    }).catch(error =>{
+        res.json({
+            code:0,
+            description:'error al verificar token de usuario',
+            error
+        });
+    });
+});
+
 
 
 
