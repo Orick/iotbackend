@@ -12,7 +12,7 @@ router.post('/create',(req,res,next)=>{
     }).then(place => {
         if (place){
             models.level.create({
-                Nombre: req.body.nombre,
+                nombre: req.body.nombre,
                 mapa: req.body.mapa
             }).then(level => {
                 if(level){

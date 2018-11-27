@@ -116,7 +116,6 @@ router.post('/getall',(req,res,next)=>{
     
     firebaseAdmin.auth().verifyIdToken(req.body.token)
     .then(decodedToken => {
-        console.log("OK OK");
         models.user.findOne({
             where:{
                 token:decodedToken.uid

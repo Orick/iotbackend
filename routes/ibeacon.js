@@ -36,7 +36,7 @@ router.post('/asing',(req,res,next)=>{
     //req.body.idlevel                
     models.ibeacon.findOne({
         where:{
-            email:req.body.idibeacon
+            id:req.body.idibeacon
         }
     }).then(ibeacon => {
         if(ibeacon){
@@ -80,5 +80,44 @@ router.post('/asing',(req,res,next)=>{
         });
     });
 });
+
+router.post('/ibeaconplace',(req,res,next)=>{
+    //req.body.idgroup                
+    models.groups.findOne({
+        where:{
+            id:req.body.idgroup
+        },
+        include: {
+            model: models.place,
+            include: {
+                model: models.level ,
+                as: 'placeLevel',
+                include:{
+                    model: models.ibeacon,
+                    as: 'levelIbeacon'
+                }
+            }
+        }
+    }).then(ibeaconGroup => {  
+        if(ibeaconGroup){
+            res.json({
+                code: 1,
+                ibeaconGroup: ibeaconGroup.place.placeLevel
+            });    
+        }else{
+            res.json({
+                code: 0,
+                description:'Error buscando'
+            });
+        }
+    }).catch(error => {
+        res.json({
+            code: 0,
+            description:'Error DB',
+            error
+        });
+    });
+});
+
 
 module.exports = router;
