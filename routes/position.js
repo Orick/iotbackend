@@ -83,4 +83,44 @@ router.post('/poss',(req,res,next)=>{
     });
 });
 
+// posicion de todos los del grupo 
+router.post('/getgroup',(req,res,next)=>{
+    //req.body.idgroup
+
+    ///////////////
+    
+    models.groups.findOne({
+        where:{
+            id:req.body.idgroup
+        },
+        include:{
+            model : models.user,
+            as: 'userGroup',
+            include:{
+                model:models.position,
+                as: 'userPosition'
+            }
+        }
+    }).then(poss => {
+        if(poss){
+            res.json({
+                code: 1,
+                position:poss
+            })
+        }else{
+            res.json({
+                code: 0,
+                description:'Poss no encontrado'
+            });
+        }
+    }).catch(error => {
+        res.json({
+            code: 0,
+            description:'Error DB',
+            error
+        });
+    });
+
+});
+
 module.exports = router;
