@@ -86,9 +86,7 @@ router.post('/poss',(req,res,next)=>{
 // posicion de todos los del grupo 
 router.post('/getgroup',(req,res,next)=>{
     //req.body.idgroup
-
     ///////////////
-    
     models.groups.findOne({
         where:{
             id:req.body.idgroup
@@ -103,9 +101,16 @@ router.post('/getgroup',(req,res,next)=>{
         }
     }).then(poss => {
         if(poss){
+            
+            
+
+            let usersPoss = poss.userGroup.map(user => {
+                return {email : user.email, position: user.userPosition[user.userPosition.length-1]}
+            })
+
             res.json({
                 code: 1,
-                position:poss
+                position:usersPoss
             })
         }else{
             res.json({
