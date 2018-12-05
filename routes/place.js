@@ -82,8 +82,6 @@ router.post('/asing',(req,res,next)=>{
 
 
 router.post('/getAll',(req,res,next)=>{
-    //req.body.idgroup
-    //req.body.idplace
     models.place.findAll({
         include:{
             model: models.level,

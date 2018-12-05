@@ -19,7 +19,7 @@ router.post('/poss',(req,res,next)=>{
             if(user){
                 models.ibeacon.findOne({
                     where:{
-                        id:req.body.idibeacon
+                        id: req.body.idibeacon
                     }
                 }).then(ibeacon => {
                     if(ibeacon){

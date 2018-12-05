@@ -22,7 +22,8 @@ router.post('/create',(req,res,next)=>{
                                 console.log("grupo asociado");
                                 res.json({
                                     code: 1,
-                                    description:'Grupo creado y asociado'
+                                    description:'Grupo creado y asociado',
+                                    group
                                 })
                         }else{
                             res.json({
